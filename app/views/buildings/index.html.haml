@@ -1,0 +1,47 @@
+%h1 Listing buildings
+
+%table
+  %thead
+    %tr
+      %th Roof set
+      %th Name
+      %th Slug
+      %th Description
+      %th District
+      %th Address
+      %th City
+      %th State
+      %th Zipcode
+      %th Latitude
+      %th Longitude
+      %th Roof sq feet
+      %th Sunlight hours
+      %th Utility
+      %th
+      %th
+      %th
+
+  %tbody
+    - @buildings.each do |building|
+      %tr
+        %td= building.roof_set
+        %td= building.name
+        %td= building.slug
+        %td= building.description
+        %td= building.district
+        %td= building.address
+        %td= building.city
+        %td= building.state
+        %td= building.zipcode
+        %td= building.latitude
+        %td= building.longitude
+        %td= building.roof_sq_feet
+        %td= building.sunlight_hours
+        %td= building.utility
+        %td= link_to 'Show', building
+        %td= link_to 'Edit', edit_building_path(building)
+        %td= link_to 'Destroy', building, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Building', new_building_path

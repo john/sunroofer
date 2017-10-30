@@ -1,0 +1,62 @@
+!!!
+%html
+  %head
+    %title
+      SunRoofer
+    %meta{charset: "utf-8"}/
+    %meta{content: "width=device-width, initial-scale=1, shrink-to-fit=no", name: "viewport"}
+    %meta{content: "ie=edge", "http-equiv": "x-ua-compatible"}
+
+    %meta{ 'http-equiv': "x-dns-prefetch-control", content: "on"}
+    %link{ rel: 'dns-prefetch', href: '//maxcdn.bootstrapcdn.com'}
+    %link{ rel: 'dns-prefetch', href: '//cdnjs.cloudflare.com'}
+    %link{ rel: 'dns-prefetch', href: '//code.jquery.com'}
+
+    = csrf_meta_tags
+
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
+    %link{href: "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css", rel: "stylesheet", integrity: "sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb", crossorigin: "anonymous"}
+
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    
+    <script src="https://use.fontawesome.com/c8e9dc7bd2.js"></script>
+
+  %body
+
+    -# .navbar-toggleable-sm.bg-faded
+    %nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top
+      %a.navbar-brand{href: "/"}
+        🌞 SunRoofer
+
+      %button.navbar-toggler{type: "button", "data-toggle": "collapse", "data-target": "#navbarSupportedContent",  "aria-controls": "navbarSupportedContent", "aria-expanded": "false", "aria-label": "Toggle navigation"}
+        %span.navbar-toggler-icon
+
+      .collapse.navbar-collapse#navbarSupportedContent
+        %ul.navbar-nav.mr-auto
+          - if user_signed_in?
+            %li.nav-item
+              Profile
+              -# = link_to 'Profile', user_path(current_user.to_param), class: 'nav-link'
+            %li.nav-item
+              = link_to 'Log out', destroy_user_session_path, method: :delete, class: 'nav-link'
+          - else
+            %li.nav-item
+              = link_to 'Sign in', new_user_session_path, class: 'nav-link'
+            %li.nav-item
+              = link_to 'Sign up', new_user_registration_path, class: 'nav-link'
+        %form.form-inline.my-2.my-lg-0
+          %input.form-control.mr-sm-2{type: 'text', placeholder: 'Search'}
+          %button.btn.btn-outline-success.my-2.my-sm-0{type: 'ubmit'}
+            Search
+
+    .container
+      = raw escaped_humane_flash_messages
+
+      = yield

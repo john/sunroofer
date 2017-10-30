@@ -1,0 +1,10 @@
+%p
+  - if user_signed_in?
+    %ul
+      %li Signed in!
+      %li= link_to 'Create new roofset', new_roof_set_path
+      
+  - else
+    Please #{link_to 'sign in', new_user_session_path}
+    or #{link_to 'sign up', new_user_registration_path}
+

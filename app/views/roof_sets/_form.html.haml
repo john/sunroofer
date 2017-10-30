@@ -1,0 +1,25 @@
+= form_for @roof_set do |f|
+  - if @roof_set.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@roof_set.errors.count, "error")} prohibited this roof_set from being saved:"
+      %ul
+        - @roof_set.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :name
+    %br/
+    = f.text_field :name, autofocus: true, class: 'form-control'
+    
+  .field
+    = f.label :description
+    %br/
+    = f.text_area :description, class: 'form-control'
+    
+  .field
+  = f.label :csv_file
+  %br/
+  = f.file_field :csv
+    
+  .actions
+    = f.submit 'Save', class: 'btn btn-primary'

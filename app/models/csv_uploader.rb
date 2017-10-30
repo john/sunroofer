@@ -1,0 +1,2 @@
+class CSVUploader < Shrine
+end

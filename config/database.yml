@@ -1,0 +1,28 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: postgres
+  password: <%= ENV['OVERRIDE_DB_PASS'] || 'admin' %>
+
+development:
+  <<: *default
+  database: sunroofer_development
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: sunroofer_test
+
+production:
+  <<: *default
+  database: sunroofer_production
+
+# be rails g scaffold Building roof_set:references name:string slug:string description:text district:string address:string city:string state:string zipcode:string latitude:float longitude:float roof_sq_feet:integer sunlight_hours:integer utility:string
+
+# be rails g scaffold RoofSet name:string slug:string description:text
+

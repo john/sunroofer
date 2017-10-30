@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @roof_set.name
+%p
+  %b Slug:
+  = @roof_set.slug
+%p
+  %b Description:
+  = @roof_set.description
+
+= link_to 'Edit', edit_roof_set_path(@roof_set)
+\|
+= link_to 'Back', roof_sets_path
