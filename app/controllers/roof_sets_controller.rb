@@ -1,5 +1,6 @@
 class RoofSetsController < ApplicationController
   before_action :set_roof_set, only: [:show, :edit, :update, :destroy]
+  skip_before_action :authenticate_user!, only: ['show']
 
   # GET /roof_sets
   # GET /roof_sets.json
@@ -10,10 +11,11 @@ class RoofSetsController < ApplicationController
   # GET /roof_sets/1
   # GET /roof_sets/1.json
   def show
-    @buildings = @roof_set.buildings.limit(3000).order(name: :asc)
-    if params[:show] == 'green'
-      @buildings = @buildings.where('latitude IS NOT NULL')
-    end
+    @buildings = @roof_set.buildings.where('latitude IS NOT NULL').limit(3000).order(name: :asc)
+    # @buildings = @roof_set.buildings.limit(3000).order(name: :asc)
+    # if params[:show] == 'green'
+    #   @buildings = @buildings.where('latitude IS NOT NULL')
+    # end
     @mappable_buildings = @buildings.select{|b| b.latitude.present?}
     @marker_hash = Gmaps4rails.build_markers(@mappable_buildings) do |building, marker|
       marker.lat building.latitude
