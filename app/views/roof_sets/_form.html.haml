@@ -17,8 +17,9 @@
     = f.text_area :description, class: 'form-control'
     
   .field
-  = f.label :csv_file
+  = f.label :csv
   %br/
+  -# = f.hidden_field :csv, value: @roof_set.cached_csv_data
   = f.file_field :csv
     
   .actions

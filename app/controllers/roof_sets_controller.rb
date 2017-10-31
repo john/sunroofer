@@ -10,6 +10,21 @@ class RoofSetsController < ApplicationController
   # GET /roof_sets/1
   # GET /roof_sets/1.json
   def show
+    @buildings = @roof_set.buildings.limit(3000).order(name: :asc)
+    if params[:show] == 'green'
+      @buildings = @buildings.where('latitude IS NOT NULL')
+    end
+    @mappable_buildings = @buildings.select{|b| b.latitude.present?}
+    @marker_hash = Gmaps4rails.build_markers(@mappable_buildings) do |building, marker|
+      marker.lat building.latitude
+      marker.lng building.longitude
+      marker.json({ :id => building.id })
+      marker.infowindow building.name
+    end
+    
+    @total_square_ft = @buildings.map{|b| b.roof_sq_feet}.compact.sum
+    @total_sunglight_hrs = @buildings.map{|b| b.sunlight_hours}.compact.sum
+    @watts_per_sq_ft = 14
   end
 
   # GET /roof_sets/new
@@ -25,14 +40,9 @@ class RoofSetsController < ApplicationController
   # POST /roof_sets.json
   def create
     @roof_set = RoofSet.new(roof_set_params)
-    
-    # save roofs files
-
+    @roof_set.user = current_user
     respond_to do |format|
       if @roof_set.save
-        
-        # Make async call to process roofs files
-        
         format.html { redirect_to @roof_set, notice: 'Roof set was successfully created.' }
         format.json { render :show, status: :created, location: @roof_set }
       else

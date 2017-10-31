@@ -1,4 +1,7 @@
-%h1 Editing building
+#{link_to 'Roof Sets', roof_sets_path} | #{link_to @building.roof_set.name, roof_set_path(@building.roof_set)}
+
+%h1
+  = link_to @building.name, building_path(@building)
 
 = render 'form'
 

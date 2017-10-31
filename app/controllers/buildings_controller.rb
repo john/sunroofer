@@ -42,6 +42,26 @@ class BuildingsController < ApplicationController
   def update
     respond_to do |format|
       if @building.update(building_params)
+        
+        if @building.sunroof_ajax_url.present? && @building.roof_sq_feet.blank?
+          response = HTTParty.get( @building.sunroof_ajax_url )
+
+          if response.code == 200
+            response_string = response.body.gsub(")]}'\n","")
+            wrapper = JSON.parse(response_string)
+            roof_info = wrapper['HouseInfoResponse']
+
+            @building.latitude = roof_info[5][0]
+            @building.longitude = roof_info[5][1]
+            @building.utility = roof_info[7][2]
+            @building.roof_sq_feet = roof_info[7][5]
+            @building.sunlight_hours = roof_info[7][6]
+            @building.save
+          else
+            puts "Response was #{response.code}, skipping."
+          end
+        end
+        
         format.html { redirect_to @building, notice: 'Building was successfully updated.' }
         format.json { render :show, status: :ok, location: @building }
       else
@@ -64,11 +84,11 @@ class BuildingsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_building
-      @building = Building.find(params[:id])
+      @building = Building.friendly.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def building_params
-      params.require(:building).permit(:roof_set_id, :name, :slug, :description, :district, :address, :city, :state, :zipcode, :latitude, :longitude, :roof_sq_feet, :sunlight_hours, :utility)
+      params.require(:building).permit(:roof_set_id, :name, :sunroof_ajax_url, :sunroof_url, :slug, :description, :address, :city, :state, :zipcode, :latitude, :longitude, :roof_sq_feet, :sunlight_hours, :utility)
     end
 end

@@ -2,7 +2,7 @@
 
 %p
   %b Roof set:
-  = @building.roof_set
+  = link_to @building.roof_set.name, @building.roof_set
 %p
   %b Name:
   = @building.name
@@ -12,9 +12,14 @@
 %p
   %b Description:
   = @building.description
+  
 %p
-  %b District:
-  = @building.district
+  %b Sunroof URL:
+  = link_to @building.sunroof_url, @building.sunroof_url, target: "_blank"
+%p
+  %b Sunroof Ajax URL:
+  = link_to @building.sunroof_ajax_url, @building.sunroof_ajax_url, target: "_blank"
+  
 %p
   %b Address:
   = @building.address
@@ -35,10 +40,10 @@
   = @building.longitude
 %p
   %b Roof sq feet:
-  = @building.roof_sq_feet
+  = number_with_delimiter( @building.roof_sq_feet )
 %p
   %b Sunlight hours:
-  = @building.sunlight_hours
+  = number_with_delimiter( @building.sunlight_hours )
 %p
   %b Utility:
   = @building.utility

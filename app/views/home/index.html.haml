@@ -1,10 +1,14 @@
-%p
-  - if user_signed_in?
-    %ul
-      %li Signed in!
-      %li= link_to 'Create new roofset', new_roof_set_path
-      
-  - else
-    Please #{link_to 'sign in', new_user_session_path}
-    or #{link_to 'sign up', new_user_registration_path}
+%h1
+  Roof sets
+  
+- if user_signed_in?
+  %ul{style: 'list-style: none; margin-left: 0; padding-left: 0'}
+    - @roof_sets.each do |roof_set|
+      %li= link_to roof_set.name, roof_set
+  %p
+    = link_to 'Create new roofset', new_roof_set_path
+    
+- else
+  Please #{link_to 'sign in', new_user_session_path}
+  or #{link_to 'sign up', new_user_registration_path}
 
