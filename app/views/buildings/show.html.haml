@@ -1,53 +1,65 @@
 %p#notice= notice
 
-%p
-  %b Roof set:
-  = link_to @building.roof_set.name, @building.roof_set
-%p
-  %b Name:
-  = @building.name
-%p
-  %b Slug:
-  = @building.slug
-%p
-  %b Description:
-  = @building.description
-  
-%p
-  %b Sunroof URL:
-  = link_to @building.sunroof_url, @building.sunroof_url, target: "_blank"
-%p
-  %b Sunroof Ajax URL:
-  = link_to @building.sunroof_ajax_url, @building.sunroof_ajax_url, target: "_blank"
-  
-%p
-  %b Address:
-  = @building.address
-%p
-  %b City:
-  = @building.city
-%p
-  %b State:
-  = @building.state
-%p
-  %b Zipcode:
-  = @building.zipcode
-%p
-  %b Latitude:
-  = @building.latitude
-%p
-  %b Longitude:
-  = @building.longitude
-%p
-  %b Roof sq feet:
-  = number_with_delimiter( @building.roof_sq_feet )
-%p
-  %b Sunlight hours:
-  = number_with_delimiter( @building.sunlight_hours )
-%p
-  %b Utility:
-  = @building.utility
+.roof_sets
+  %p
+    %b Roof set:
+    = link_to @building.roof_set.name, @building.roof_set
+  %p
+    %h1{{style: "padding-bottom: 0;"}}
+      = @building.name
+  / %p
+  /   %b Description:
+  /   = @building.description
 
-= link_to 'Edit', edit_building_path(@building)
-\|
-= link_to 'Back', buildings_path
+  .building-list
+    %p
+      = @building.address
+      %br
+      #{@building.city}, #{@building.state} #{@building.zipcode}
+      %br
+      #{@building.latitude}° / #{@building.longitude}°
+  
+    / %p
+    /   %b Notes:
+    /   = @building.notes
+    / %p
+    /   %b Excluded?
+    /   = @building.exclude
+  
+    %p
+      = link_to 'View on Sunroof', @building.sunroof_url, target: "_blank"
+    / %p
+    /   = link_to 'Sunroof Ajax URL', @building.sunroof_ajax_url, target: "_blank"
+
+    %p
+      %b Roof sq feet:
+      = number_with_delimiter( @building.roof_sq_feet )
+      / %p
+      /   %b Adjusted sq feet:
+      /   = number_with_delimiter( @building.adjusted_sq_feet )
+      %br
+      %b Sunlight hours:
+      = number_with_delimiter( @building.sunlight_hours )
+    / %p
+    /   %b Utility:
+    /   = @building.utility
+
+    // = link_to 'Edit', edit_building_path(@building)
+  
+  .map
+    #map
+
+:javascript
+  handler = Gmaps.build('Google');
+  handler.buildMap({ provider: { zoom: 17 }, internal: {id: 'map'}}, function(){
+    markers = handler.addMarkers([
+      {
+        "lat": #{@building.latitude},
+        "lng": #{@building.longitude},
+        "infowindow": "#{@building.name}"
+      }
+    ]);
+    // handler.bounds.extendWith(markers);
+    handler.map.centerOn({lat: #{@building.latitude}, lng: #{@building.longitude}})
+    handler.fitMapToBounds();
+  });

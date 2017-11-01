@@ -23,8 +23,22 @@ h2 {
   margin-top: 20px;
 }
 
+.fix-map {
+  position:fixed;
+  top: 59px;
+  left: 615px;
+}
+
+.map-caption {
+  font-size: 16px;
+  margin-top: 10px;
+  border: 1px solid grey;
+  padding: 10px;
+}
+
 .roof_sets {
-  width: 1100px;
+  width: 1101px;
+  
   .building-list {
     width: 475px;
     float: left;
@@ -34,6 +48,7 @@ h2 {
     float: right;
   }
   #map {
+    margin-top: 20px;
     width: 600px;
     height: 400px;
     border: 1px solid grey;

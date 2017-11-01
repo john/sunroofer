@@ -11,7 +11,7 @@ class RoofSetsController < ApplicationController
   # GET /roof_sets/1
   # GET /roof_sets/1.json
   def show
-    @buildings = @roof_set.buildings.where('latitude IS NOT NULL').limit(3000).order(name: :asc)
+    @buildings = @roof_set.buildings.where('latitude IS NOT NULL').order(name: :asc)
     # @buildings = @roof_set.buildings.limit(3000).order(name: :asc)
     # if params[:show] == 'green'
     #   @buildings = @buildings.where('latitude IS NOT NULL')
@@ -20,7 +20,7 @@ class RoofSetsController < ApplicationController
     @marker_hash = Gmaps4rails.build_markers(@mappable_buildings) do |building, marker|
       marker.lat building.latitude
       marker.lng building.longitude
-      marker.json({ :id => building.id })
+      marker.json({ 'id' => building.id })
       marker.infowindow building.name
     end
     

@@ -32,6 +32,10 @@
     = f.number_field :roof_sq_feet, class: 'form-control'
     
   .field
+    = f.label :adjusted_sq_feet
+    = f.number_field :adjusted_sq_feet, class: 'form-control'
+    
+  .field
     = f.label :sunlight_hours
     = f.number_field :sunlight_hours, class: 'form-control'
     
@@ -42,6 +46,15 @@
   .field
     = f.label :description
     = f.text_area :description, class: 'form-control'
+    
+  .field
+    = f.label :notes
+    = f.text_area :notes, class: 'form-control'
+    
+  .field
+    = f.label :exclude
+    = f.check_box :exclude, class: 'form-control'
+    
   .field
     = f.label :address
     = f.text_field :address, class: 'form-control'
