@@ -40,6 +40,10 @@
     = f.number_field :sunlight_hours, class: 'form-control'
     
   .field
+    = f.label :installed_kw
+    = f.number_field :installed_kw, step: "0.1", class: 'form-control'
+    
+  .field
     = f.label :sunroof_url
     = f.text_field :sunroof_url, class: 'form-control'
     
@@ -52,8 +56,10 @@
     = f.text_area :notes, class: 'form-control'
     
   .field
-    = f.label :exclude
-    = f.check_box :exclude, class: 'form-control'
+    <label>
+    Exclude? &nbsp;
+    = f.check_box :exclude, style: "display: inline;"
+    </label>
     
   .field
     = f.label :address

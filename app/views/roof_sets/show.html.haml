@@ -1,50 +1,57 @@
 %p#notice
   = notice
 
-.roof_sets
-  %p
-    = link_to 'Roof sets', roof_sets_path
-  %p
+.row
+  .roof-set-hed
+    - if user_signed_in?
+      %p
+        = link_to 'Roof sets', roof_sets_path
     %h1{style: "margin-bottom: 0; padding-bottom: 0;"}
       = @roof_set.name
     
-  .building-list
     - if @roof_set.description.present?
-      %p
+      %p{style: "font-size: 14px;"}
         = @roof_set.description
-    
+        
+.roof-set        
+  .building-list
     - if @buildings.present?
       %table#schools
         %thead
-          %th
+          - if user_signed_in?
+            %th
           %th School
           %th{style: 'width: 60px;'} sq ft
-          %th{style: 'width: 50px;'} kW
-          -# %td hrs yr
+          %th{style: 'width: 50px;'} max kW
+          %th{style: 'width: 50px;'} inst kW
+          %th{style: 'width: 60px;'} hrs yr
           %th kWh/yr
           %th $/yr
         - @buildings.each do |building|
           - color = (building.latitude.present? ? '#EAFAF1' : '#FADBD8')
-          - kW = building.roof_sq_feet.present? ? (building.roof_sq_feet * @watts_per_sq_ft) / 1000 : nil
-          - kWh = kW.present? && building.sunlight_hours.present? ? ((building.roof_sq_feet * @watts_per_sq_ft) / 1000) * building.sunlight_hours : nil
-          - savings = kWh.present? ? kWh * 0.17 : nil
           %tr{style: "background-color: #{color}"}
-            %td
-              = link_to '<i class="fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_building_path(building), target: "_blank"
+            - if user_signed_in?
+              %td
+                = link_to '<i class="fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_building_path(building), target: "_blank"
             %td
               = link_to building.name, building_path(building), onmouseover: "Gmaps.selectMarker(#{building.id});", onmouseout: "Gmaps.turnOffMarkers();"
             %td
               = number_with_delimiter( building.roof_sq_feet )
             %td
-              = number_with_delimiter( kW )
+              = number_with_delimiter( building.kW )
+            %td
+              = number_with_delimiter( building.installed_kw )
+            %td
+              = number_with_delimiter( building.sunlight_hours )
           
             -# %td
             -#   = number_with_delimiter( building.sunlight_hours )
           
             %td
-              = number_with_delimiter( kWh )
+              = number_with_delimiter( building.kWh_yr )
+
             %td
-              = number_to_currency( savings, precision: 0 )
+              = number_to_currency( building.savings, precision: 0 )
           
 
     -# = link_to 'Edit', edit_roof_set_path(@roof_set)
@@ -56,10 +63,10 @@
         #{number_with_delimiter( @total_square_ft )}
       square feet of roof space, capable of holding up to 
       %span{style: "font-weight: bold;"}
-        #{number_with_delimiter( (@total_square_ft * @watts_per_sq_ft) / 1000 )}
+        #{number_with_delimiter( (@total_square_ft * Building::WATTS_PER_SQ_FT) / 1000 )}
       kW of solar panels, and producing up to
       %span{style: "font-weight: bold;"}
-        #{number_with_delimiter( (@total_square_ft * @watts_per_sq_ft * @total_sunglight_hrs) / 1000)}
+        #{number_with_delimiter( @total_kWh )}
       kWh of electricity per year.
     
     #map

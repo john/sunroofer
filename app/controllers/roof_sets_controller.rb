@@ -18,6 +18,13 @@ class RoofSetsController < ApplicationController
     # end
     @mappable_buildings = @buildings.select{|b| b.latitude.present?}
     @marker_hash = Gmaps4rails.build_markers(@mappable_buildings) do |building, marker|
+      if building.installed_kw.present?
+        marker.picture({
+                  :url => "https://mt.googleapis.com/vt/icon/name=icons/onion/22-blue-dot.png",
+                  :width   => 32,
+                  :height  => 32
+                 })
+      end
       marker.lat building.latitude
       marker.lng building.longitude
       marker.json({ 'id' => building.id })
@@ -26,7 +33,7 @@ class RoofSetsController < ApplicationController
     
     @total_square_ft = @buildings.map{|b| b.roof_sq_feet}.compact.sum
     @total_sunglight_hrs = @buildings.map{|b| b.sunlight_hours}.compact.sum
-    @watts_per_sq_ft = 14
+    @total_kWh = @buildings.map{|b| b.kWh_yr }.compact.sum
   end
 
   # GET /roof_sets/new

@@ -90,6 +90,6 @@ class BuildingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def building_params
-      params.require(:building).permit(:roof_set_id, :name, :sunroof_ajax_url, :sunroof_url, :slug, :description, :notes, :exclude, :address, :city, :state, :zipcode, :latitude, :longitude, :adjusted_sq_feet, :roof_sq_feet, :sunlight_hours, :utility)
+      params.require(:building).permit(:roof_set_id, :name, :sunroof_ajax_url, :sunroof_url, :slug, :description, :notes, :exclude, :address, :city, :state, :zipcode, :latitude, :longitude, :adjusted_sq_feet, :installed_kw, :roof_sq_feet, :sunlight_hours, :utility)
     end
 end

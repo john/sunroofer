@@ -34,12 +34,35 @@
     %p
       %b Roof sq feet:
       = number_with_delimiter( @building.roof_sq_feet )
-      / %p
-      /   %b Adjusted sq feet:
-      /   = number_with_delimiter( @building.adjusted_sq_feet )
+      
+      %br
+      %b Potential kW:
+      = number_with_delimiter( @building.kW )
+      
+      %br
+      %b Installed kW:
+      = number_with_delimiter( @building.installed_kw)
+      
       %br
       %b Sunlight hours:
       = number_with_delimiter( @building.sunlight_hours )
+      
+      %br
+      %b kWh/yr:
+      = number_with_delimiter( @building.kWh_yr)
+      
+      %br
+      %b Annual potential savings
+      = number_to_currency( @building.savings, precision: 0 )
+      
+      
+      / %p
+      /   %b Adjusted sq feet:
+      /   = number_with_delimiter( @building.adjusted_sq_feet )
+      
+      
+      
+      
     / %p
     /   %b Utility:
     /   = @building.utility
