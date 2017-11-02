@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171031223434) do
+ActiveRecord::Schema.define(version: 20171102223552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20171031223434) do
     t.boolean "exclude"
     t.text "notes"
     t.integer "adjusted_sq_feet"
-    t.float "installed_kw"
+    t.integer "installed_kw"
     t.index ["name"], name: "index_buildings_on_name"
     t.index ["roof_set_id"], name: "index_buildings_on_roof_set_id"
   end

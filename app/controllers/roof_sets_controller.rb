@@ -11,7 +11,7 @@ class RoofSetsController < ApplicationController
   # GET /roof_sets/1
   # GET /roof_sets/1.json
   def show
-    @buildings = @roof_set.buildings.where('latitude IS NOT NULL').order(name: :asc)
+    @buildings = @roof_set.buildings.geolocated.order(name: :asc)
     # @buildings = @roof_set.buildings.limit(3000).order(name: :asc)
     # if params[:show] == 'green'
     #   @buildings = @buildings.where('latitude IS NOT NULL')
@@ -30,10 +30,6 @@ class RoofSetsController < ApplicationController
       marker.json({ 'id' => building.id })
       marker.infowindow building.name
     end
-    
-    @total_square_ft = @buildings.map{|b| b.roof_sq_feet}.compact.sum
-    @total_sunglight_hrs = @buildings.map{|b| b.sunlight_hours}.compact.sum
-    @total_kWh = @buildings.map{|b| b.kWh_yr }.compact.sum
   end
 
   # GET /roof_sets/new

@@ -23,7 +23,7 @@
           %th School
           %th{style: 'width: 60px;'} sq ft
           %th{style: 'width: 50px;'} max kW
-          %th{style: 'width: 50px;'} inst kW
+          %th{style: 'width: 50px;'} installed kW
           %th{style: 'width: 60px;'} hrs yr
           %th kWh/yr
           %th $/yr
@@ -60,13 +60,13 @@
     .map-caption
       #{@roof_set.name} has a combined
       %span{style: "font-weight: bold;"}
-        #{number_with_delimiter( @total_square_ft )}
+        #{number_with_delimiter( @roof_set.total_square_ft )}
       square feet of roof space, capable of holding up to 
       %span{style: "font-weight: bold;"}
-        #{number_with_delimiter( (@total_square_ft * Building::WATTS_PER_SQ_FT) / 1000 )}
+        #{number_with_delimiter( @roof_set.total_kw)}
       kW of solar panels, and producing up to
       %span{style: "font-weight: bold;"}
-        #{number_with_delimiter( @total_kWh )}
+        #{number_with_delimiter( @roof_set.total_kWh )}
       kWh of electricity per year.
     
     #map
