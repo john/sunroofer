@@ -11,8 +11,12 @@ h2 {
 }
 
 .home-text {
-  margin: 20px 150px 20px 30px;
+  margin: 20px 450px 20px 30px;
   font-size: 22px;
+  
+  h1 {
+    margin: 45px 0 25px 0;
+  }
 }
 
 @media (max-width: 767px) {

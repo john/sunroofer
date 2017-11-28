@@ -1,17 +1,22 @@
 .home-text
 
   %p
-    <b>SunRoofer</b> aggregates solar information across multiple roofs--every school in a district, all hospitals in a region, or any other arbitrary set of buildings. Much of the data comes from Google's amazing #{link_to 'Project Sunroof', 'https://www.google.com/get/sunroof', target: "_blank"}, hence the name.
+    <b>SunRoofer</b> aggregates the solar capacity of sets of roofs. You can see the square footage, kilowatt potential, hours of sunlight per year, and other info about, for instance, the combined roofs of every school in a district, all hospitals in a region, or any other arbitrary set of buildings.
     
-  %p{style: "margin-top: 25px;"}
-    This just launched in November 2017, more features are planned. Please feel free to email for feature requests, more info, or if you have a set of roofs you'd like analyzed: John McGrath, #{mail_to 'john@fnnny.com', 'john@fnnny.com'}
+  %p
+    Much of the data comes from Google's amazing #{link_to 'Project Sunroof', 'https://www.google.com/get/sunroof', target: "_blank"}, hence the name.
+    
+  %p
+    Email #{mail_to 'John McGrath', 'john@fnnny.com'} for feature requests, bug reports, more info, or if you have a set of roofs you'd like analyzed.
+    
+  %h1
+    Roof Sets
   
-  %ul{style: "margin-top: 30px;"}
+  %dl
     - @roof_sets.each do |roof_set|
-      %li
-        %b
-          = link_to roof_set.name, roof_set
-        %div{style: "font-size: 16px;"}
-          = roof_set.description
+      %dt
+        = link_to roof_set.name, roof_set
+      %dd
+        = roof_set.description
 
   

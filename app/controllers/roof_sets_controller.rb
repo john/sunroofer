@@ -1,6 +1,8 @@
 class RoofSetsController < ApplicationController
   before_action :set_roof_set, only: [:show, :edit, :update, :destroy]
   skip_before_action :authenticate_user!, only: ['show']
+  
+  include ActionView::Helpers::NumberHelper
 
   # GET /roof_sets
   # GET /roof_sets.json
@@ -28,7 +30,7 @@ class RoofSetsController < ApplicationController
       marker.lat building.latitude
       marker.lng building.longitude
       marker.json({ 'id' => building.id })
-      marker.infowindow building.name
+      marker.infowindow "#{building.name}<br>#{number_with_delimiter(building.roof_sq_feet)} square feet available<br>#{number_with_delimiter(building.sunlight_hours)} hours of sun annually"
     end
   end
 
