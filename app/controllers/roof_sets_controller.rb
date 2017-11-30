@@ -30,7 +30,11 @@ class RoofSetsController < ApplicationController
       marker.lat building.latitude
       marker.lng building.longitude
       marker.json({ 'id' => building.id })
-      marker.infowindow "#{building.name}<br>#{number_with_delimiter(building.roof_sq_feet)} square feet available<br>#{number_with_delimiter(building.sunlight_hours)} hours of sun annually"
+      info = "#{building.name}<br>#{number_with_delimiter(building.roof_sq_feet)} square feet available<br>#{number_with_delimiter(building.sunlight_hours)} hours of sun annually"
+      if building.installed_kw.present?
+        info += "<div style='background-color: #aed6f1 '><i>Already installed</i>: #{building.installed_kw} kW</div>"
+      end
+      marker.infowindow info
     end
   end
 
