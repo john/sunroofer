@@ -1,17 +1,17 @@
-%p#notice= notice
-
-.roof_sets
-  %p
-    %b Roof set:
-    = link_to @building.roof_set.name, @building.roof_set
-  %p
+%p#notice
+  = notice
+  
+.row
+  .roof-set-hed
+    %p
+      %b Roof set:
+      = link_to @building.roof_set.name, @building.roof_set
     %h1{{style: "padding-bottom: 0;"}}
       = @building.name
-  / %p
-  /   %b Description:
-  /   = @building.description
 
+.roof-set        
   .building-list
+  
     %p
       = @building.address
       %br
@@ -19,17 +19,8 @@
       %br
       #{@building.latitude}° / #{@building.longitude}°
   
-    / %p
-    /   %b Notes:
-    /   = @building.notes
-    / %p
-    /   %b Excluded?
-    /   = @building.exclude
-  
     %p
       = link_to 'View on Sunroof', @building.sunroof_url, target: "_blank"
-    / %p
-    /   = link_to 'Sunroof Ajax URL', @building.sunroof_ajax_url, target: "_blank"
 
     %b Roof sq feet:
     = number_with_delimiter( @building.roof_sq_feet )
@@ -70,18 +61,22 @@
       
   .map
     #map
+      foookasdvavasdvadsvdsvdvdvdvd
+      asdvdsv
+      dvv
 
-:javascript
-  handler = Gmaps.build('Google');
-  handler.buildMap({ provider: { zoom: 17 }, internal: {id: 'map'}}, function(){
-    markers = handler.addMarkers([
-      {
-        "lat": #{@building.latitude},
-        "lng": #{@building.longitude},
-        "infowindow": "#{@building.name}"
-      }
-    ]);
-    // handler.bounds.extendWith(markers);
-    handler.map.centerOn({lat: #{@building.latitude}, lng: #{@building.longitude}})
-    handler.fitMapToBounds();
-  });
+  :javascript
+    console.log('foo');
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: { zoom: 17 }, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers([
+        {
+          "lat": #{@building.latitude},
+          "lng": #{@building.longitude},
+          "infowindow": "#{@building.name}"
+        }
+      ]);
+      // handler.bounds.extendWith(markers);
+      handler.map.centerOn({lat: #{@building.latitude}, lng: #{@building.longitude}})
+      handler.fitMapToBounds();
+    });

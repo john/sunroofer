@@ -71,46 +71,50 @@
     
     #map
 
-:javascript
-  new Tablesort(document.getElementById('schools'));
+  - if @marker_hash.present?
+    
+    :javascript
+      if ( document.getElementById('schools') ) {
+        new Tablesort(document.getElementById('schools'));
+      }
+      
+      $(window).scroll(function(){
+        if ($(this).scrollTop() > 135) {
+          $('.map').addClass('fix-map');
+        } else {
+          $('.map').removeClass('fix-map');
+        }
+      });
   
-  $(window).scroll(function(){
-    if ($(this).scrollTop() > 135) {
-      $('.map').addClass('fix-map');
-    } else {
-      $('.map').removeClass('fix-map');
-    }
-  });
+      handler = Gmaps.build('Google');
+      handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+        markers = #{raw @marker_hash.to_json}
+        Gmaps.store = {} // Initialize storage
+        Gmaps.store.markers = markers.map(function(m) {
+          marker = handler.addMarker(m);
+          marker.serviceObject.set('id', m.id); // You can add other attributes using set
+          return marker;
+        });
+        handler.bounds.extendWith(Gmaps.store.markers);
+        handler.fitMapToBounds();
+      });
   
-  handler = Gmaps.build('Google');
-  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-    markers = #{raw @marker_hash.to_json}
-    Gmaps.store = {} // Initialize storage
-    Gmaps.store.markers = markers.map(function(m) {
-      marker = handler.addMarker(m);
-      marker.serviceObject.set('id', m.id); // You can add other attributes using set
-      return marker;
-    });
-    handler.bounds.extendWith(Gmaps.store.markers);
-    handler.fitMapToBounds();
-  });
+      // https://github.com/apneadiving/Google-Maps-for-Rails/wiki/Adding-an-id-to-markers-and-access-them-later
+      Gmaps.selectMarker = function(id) {
+        $.each(Gmaps.store.markers, function() {
+          if (this.serviceObject.id == id) {
+            // this.panTo();
+            this.serviceObject.setAnimation(google.maps.Animation.BOUNCE);
+            // this.serviceObject.setAnimation(4);
+          } else {
+            this.serviceObject.setAnimation(null);
+          }}
+        );
+      }
   
-  // https://github.com/apneadiving/Google-Maps-for-Rails/wiki/Adding-an-id-to-markers-and-access-them-later
-  Gmaps.selectMarker = function(id) {
-    $.each(Gmaps.store.markers, function() {
-      if (this.serviceObject.id == id) {
-        // this.panTo();
-        this.serviceObject.setAnimation(google.maps.Animation.BOUNCE);
-        // this.serviceObject.setAnimation(4);
-      } else {
-        this.serviceObject.setAnimation(null);
-      }}
-    );
-  }
-  
-  Gmaps.turnOffMarkers = function() {
-    $.each(Gmaps.store.markers, function() {
-      this.serviceObject.setAnimation(null);
-    });
-  }
+      Gmaps.turnOffMarkers = function() {
+        $.each(Gmaps.store.markers, function() {
+          this.serviceObject.setAnimation(null);
+        });
+      }
   

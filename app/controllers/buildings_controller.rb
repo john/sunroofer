@@ -14,6 +14,27 @@ class BuildingsController < ApplicationController
     if true
       @tags = @building.all_tags_list #.owner_tags_on(current_user, :tags)
     end
+    
+    @marker_hash = Gmaps4rails.build_markers([@building]) do |building, marker|
+      # if building.installed_kw.present?
+      #   marker.picture({
+      #             :url => "https://mt.googleapis.com/vt/icon/name=icons/onion/22-blue-dot.png",
+      #             :width   => 32,
+      #             :height  => 32
+      #            })
+      # end
+      marker.lat building.latitude
+      marker.lng building.longitude
+      marker.json({ 'id' => building.id })
+      
+      # info = "#{building.name}<br>#{number_with_delimiter(building.roof_sq_feet)} square feet available<br>#{number_with_delimiter(building.sunlight_hours)} hours of sun annually"
+      #
+      # if building.installed_kw.present?
+      #   info += "<div style='background-color: #aed6f1 '><i>Already installed</i>: #{building.installed_kw} kW</div>"
+      # end
+      # marker.infowindow info
+    end
+    
   end
 
   # GET /buildings/new
