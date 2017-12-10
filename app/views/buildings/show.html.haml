@@ -53,20 +53,20 @@
           #{t}
           = link_to "<i class='fa fa-trash-o' aria-hidden='true' style='display:none;' id='trash_#{i}'></i>".html_safe, "/buildings/#{@building.to_param}/tag/#{t}",
               data: {:confirm => 'Estas seguro?'}, method: :delete, id: 'foo3'
-            
-    - if user_signed_in?
-      = form_for @building, url: tag_building_path, method: :post do |f|
-        = f.text_field :tag_list
-        = f.submit 'add tag', class: 'btn'
+    %div{style: "margin-top: 20px;"}
+      - if user_signed_in? && current_user == @building.user
+        = form_for @building, url: tag_building_path, method: :post do |f|
+          - options = [['School', 'school'], ['Office Building', 'office building'], ['Fulfillment Center', 'fulfillment center'], ['Warehouse', 'warehouse'], ['Data Center', 'data center']]
+        
+          = f.select :tag_list, options, {include_blank: true}, {class: 'form-control', style: 'display: inline; width: 300px;'}
+        
+          -# = options_for_select(options)
+          = f.submit 'Tag', class: 'btn'
       
   .map
     #map
-      foookasdvavasdvadsvdsvdvdvdvd
-      asdvdsv
-      dvv
 
   :javascript
-    console.log('foo');
     handler = Gmaps.build('Google');
     handler.buildMap({ provider: { zoom: 17 }, internal: {id: 'map'}}, function(){
       markers = handler.addMarkers([

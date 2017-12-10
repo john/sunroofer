@@ -18,15 +18,5 @@ RSpec.describe RoofSetsController, :type => :controller do
       get :show, params: {id: roof_set.id}
       expect(response).to have_http_status(:success)
     end
-
-    # context "logged in" do
-    #   login_user
-    #
-    #   it "redirects" do
-    #     get :show, params: {id: rz.id}
-    #     expect(response).to redirect_to('/404.html')
-    #   end
-    # end
-    
   end
 end

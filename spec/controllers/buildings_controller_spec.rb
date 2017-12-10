@@ -6,19 +6,17 @@ RSpec.describe BuildingsController, :type => :controller do
     let(:building) { create :building }
     
     it "works if not logged in" do
-      
       get :show, params: {id: building.id}
       expect(response).to have_http_status(:success)
     end
-
-    # context "logged in" do
-    #   login_user
-    #
-    #   it "redirects" do
-    #     get :show, params: {id: rz.id}
-    #     expect(response).to redirect_to('/404.html')
-    #   end
-    # end
     
+    context "logged in" do
+      login
+      
+      it "works if logged in" do
+        get :show, params: {id: building.id}
+        expect(response).to have_http_status(:success)
+      end
+    end
   end
 end
