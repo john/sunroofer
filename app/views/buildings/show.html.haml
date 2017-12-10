@@ -56,7 +56,7 @@
     %div{style: "margin-top: 20px;"}
       - if user_signed_in? && current_user == @building.user
         = form_for @building, url: tag_building_path, method: :post do |f|
-          - options = [['School', 'school'], ['Office Building', 'office building'], ['Fulfillment Center', 'fulfillment center'], ['Warehouse', 'warehouse'], ['Data Center', 'data center']]
+          - options = [['School', 'school'], ['Office Building', 'office building'], ['Fulfillment Center', 'fulfillment center'], ['Sort Center', 'sort center'], ['Warehouse', 'warehouse'], ['Data Center', 'data center']]
         
           = f.select :tag_list, options, {include_blank: true}, {class: 'form-control', style: 'display: inline; width: 300px;'}
         
