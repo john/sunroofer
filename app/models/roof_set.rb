@@ -2,6 +2,8 @@ class RoofSet < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
   
+  acts_as_taggable
+  
   belongs_to :user
   has_many :buildings
   validates :name, presence: true

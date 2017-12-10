@@ -31,44 +31,43 @@
     / %p
     /   = link_to 'Sunroof Ajax URL', @building.sunroof_ajax_url, target: "_blank"
 
-    %p
-      %b Roof sq feet:
-      = number_with_delimiter( @building.roof_sq_feet )
+    %b Roof sq feet:
+    = number_with_delimiter( @building.roof_sq_feet )
+    
+    %br
+    %b Potential kW:
+    = number_with_delimiter( @building.kW )
+    
+    %br
+    %b Installed kW:
+    = number_with_delimiter( @building.installed_kw)
+    
+    %br
+    %b Sunlight hours:
+    = number_with_delimiter( @building.sunlight_hours )
+    
+    %br
+    %b kWh/yr:
+    = number_with_delimiter( @building.kWh_yr)
+    
+    %br
+    %b Annual potential savings
+    = number_to_currency( @building.savings, precision: 0 )
+    
+    %hr
+    %b Tags:
+    - if @tags
+      - @tags.each_with_index do |t, i|
+        %div{onmouseover: "$('#trash_#{i}').show()", onmouseout: "$('#trash_#{i}').hide()"}
+          #{t}
+          = link_to "<i class='fa fa-trash-o' aria-hidden='true' style='display:none;' id='trash_#{i}'></i>".html_safe, "/buildings/#{@building.to_param}/tag/#{t}",
+              data: {:confirm => 'Estas seguro?'}, method: :delete, id: 'foo3'
+            
+    - if user_signed_in?
+      = form_for @building, url: tag_building_path, method: :post do |f|
+        = f.text_field :tag_list
+        = f.submit 'add tag', class: 'btn'
       
-      %br
-      %b Potential kW:
-      = number_with_delimiter( @building.kW )
-      
-      %br
-      %b Installed kW:
-      = number_with_delimiter( @building.installed_kw)
-      
-      %br
-      %b Sunlight hours:
-      = number_with_delimiter( @building.sunlight_hours )
-      
-      %br
-      %b kWh/yr:
-      = number_with_delimiter( @building.kWh_yr)
-      
-      %br
-      %b Annual potential savings
-      = number_to_currency( @building.savings, precision: 0 )
-      
-      
-      / %p
-      /   %b Adjusted sq feet:
-      /   = number_with_delimiter( @building.adjusted_sq_feet )
-      
-      
-      
-      
-    / %p
-    /   %b Utility:
-    /   = @building.utility
-
-    // = link_to 'Edit', edit_building_path(@building)
-  
   .map
     #map
 

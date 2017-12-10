@@ -7,6 +7,8 @@ class User < ApplicationRecord
  extend FriendlyId
  friendly_id :name, use: :slugged
  
+ acts_as_tagger
+ 
  has_many :roof_sets
  
 end
