@@ -23,7 +23,7 @@ class Building < ApplicationRecord
   end
 
   def kWh_yr
-    self.kW.present? ? (self.kW * self.sunlight_hours) : nil
+    self.kW.present? && self.sunlight_hours.present? ? (self.kW * self.sunlight_hours) : nil
   end
 
   # https://www.electricitylocal.com/states/california/san-francisco/
