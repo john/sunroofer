@@ -9,7 +9,7 @@
   .field
     = f.label :roof_set
     %br/
-    = @building.roof_set.name
+    = f.select :roof_set_id, RoofSet.all.map{|rs| [rs.name, rs.id]}, {include_blank: ' -- Select a Roof Set -- '}
     
   .field
     = f.label :name
@@ -19,7 +19,6 @@
   .field
     = link_to 'Sunroof URL', @building.sunroof_url, target: "_blank"
     
-
   .field
     = f.label :sunroof_ajax_url
     = f.text_field :sunroof_ajax_url, class: 'form-control'
@@ -54,6 +53,10 @@
   .field
     = f.label :notes
     = f.text_area :notes, class: 'form-control'
+    
+  .field
+    = f.label :built_at
+    = f.date_select :built_at, order: [:day, :month, :year], start_year: 1900, include_blank: true, default: nil
     
   .field
     <label>

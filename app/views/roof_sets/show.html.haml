@@ -4,7 +4,7 @@
 .row
   .roof-set-hed
     - if user_signed_in?
-      %p
+      %div
         = link_to 'Roof sets', roof_sets_path
     %h1{style: "margin-bottom: 0; padding-bottom: 0;"}
       = @roof_set.name
@@ -13,12 +13,16 @@
       %p{style: "font-size: 14px;"}
         = @roof_set.description
         
+    - if user_signed_in? && @roof_set.user == current_user
+      %div
+        = link_to "Add building", new_roof_set_building_path(@roof_set)
+        
 .roof-set        
   .building-list
     - if @buildings.present?
       %table#schools
         %thead
-          - if user_signed_in?
+          - if user_signed_in? && @roof_set.user == current_user
             %th
           %th School
           %th{style: 'width: 60px;'} sq ft
@@ -30,7 +34,7 @@
         - @buildings.each do |building|
           - color = (building.latitude.present? ? '#EAFAF1' : '#FADBD8')
           %tr{style: "background-color: #{color}"}
-            - if user_signed_in?
+            - if user_signed_in? && @roof_set.user == current_user
               %td
                 = link_to '<i class="fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_building_path(building), target: "_blank"
             %td

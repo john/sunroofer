@@ -39,7 +39,7 @@
     
     %br
     %b kWh/yr:
-    = number_with_delimiter( @building.kWh_yr)
+    = number_with_delimiter( @building.kWh_yr ) if @building.kWh_yr
     
     %br
     %b Annual potential savings
