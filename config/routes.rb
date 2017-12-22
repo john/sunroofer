@@ -9,7 +9,9 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :roof_sets
+  resources :roof_sets do
+    resources :buildings
+  end
   # do
   #   member do
   #     post 'tag' => 'roof_sets#tag'
