@@ -1,45 +1,51 @@
-%h1 Listing buildings
+:css
+  td { vertical-align: top; }
+  .roofset { padding-right: 20px; }
+  .name { padding-right: 30px; font-weight: bold; }
+  .desc { padding-right: 20px; width: 400px; }
+  .edit a { color: grey; }
+  .pencil {padding-right: 10px; }
+
+
+%h1
+  Buildings
 
 %table
   %thead
     %tr
       %th Roof set
       %th Name
-      %th Slug
       %th Description
-      %th District
       %th Address
-      %th City
-      %th State
-      %th Zipcode
-      %th Latitude
-      %th Longitude
+      %th Latitude/Longitude
       %th Roof sq feet
       %th Sunlight hours
       %th Utility
-      %th
       %th
       %th
 
   %tbody
     - @buildings.each do |building|
       %tr
-        %td= building.roof_set
-        %td= building.name
-        %td= building.slug
-        %td= building.description
-        %td= building.address
-        %td= building.city
-        %td= building.state
-        %td= building.zipcode
-        %td= building.latitude
-        %td= building.longitude
+        %td.roofset
+          = link_to building.roof_set.name, building.roof_set
+        %td.name
+          = link_to building.name, building
+        %td.desc
+          = building.description
+        %td
+          #{building.address}<br />
+          #{building.city}, #{building.state} #{building.zipcode}
+        %td
+          #{building.latitude} / #{building.longitude}
         %td= building.roof_sq_feet
         %td= building.sunlight_hours
         %td= building.utility
-        %td= link_to 'Show', building
-        %td= link_to 'Edit', edit_building_path(building)
-        %td= link_to 'Destroy', building, method: :delete, data: { confirm: 'Are you sure?' }
+        
+        %td.edit.pencil
+          = link_to '<i class="fas fa-pencil-alt"></i>'.html_safe, edit_roof_set_path(building)
+        %td.edit.trash
+          = link_to '<i class="fas fa-trash-alt"></i>'.html_safe, building, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
 
