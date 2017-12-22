@@ -40,6 +40,10 @@ class BuildingsController < ApplicationController
   # GET /buildings/new
   def new
     @building = Building.new
+    if params[:roof_set_id].present?
+      @roof_set = RoofSet.friendly.find(params[:roof_set_id])
+      @building.roof_set = @roof_set
+    end
   end
 
   # GET /buildings/1/edit
@@ -50,6 +54,7 @@ class BuildingsController < ApplicationController
   # POST /buildings.json
   def create
     @building = Building.new(building_params)
+    @building.user = current_user
 
     respond_to do |format|
       if @building.save
