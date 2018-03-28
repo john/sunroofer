@@ -13,10 +13,12 @@
     Roof Sets
   
   %dl
-    - @roof_sets.each do |roof_set|
+    - if @roof_sets
+      - @roof_sets.each do |roof_set|
+        %dt
+          = link_to roof_set.name, roof_set
+        %dd
+          = roof_set.description
+    - else
       %dt
-        = link_to roof_set.name, roof_set
-      %dd
-        = roof_set.description
-
-  
+        None!

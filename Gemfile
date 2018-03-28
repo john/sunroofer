@@ -15,7 +15,7 @@ gem 'httparty'
 gem 'humane-rails'
 gem 'pg'
 gem 'puma'
-gem 'rails', '~> 5.2.0.beta2'
+gem 'rails', '~> 5.2.0.rc2'
 gem 'sass-rails'
 gem 'shrine'
 gem 'uglifier', '>= 1.3.0'
@@ -50,4 +50,4 @@ group :test do
   gem 'shrine-memory'
 end
 
-ruby "2.4.2"
+ruby "2.4.3"
