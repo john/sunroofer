@@ -3,7 +3,7 @@
 # source: 
 # https://docs.docker.com/compose/rails/#define-the-project
 
-version: '3.4'
+version: '3.2'
 services:
   db:
     image: postgres
@@ -11,10 +11,11 @@ services:
     build: .
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     volumes:
-      - .:/sunroofer
+      - $PWD:/sunroofer
     ports:
-      - "4000:3000"
+      - "3000:3000"
     env_file:
       - .env
     depends_on:
       - db
+      
