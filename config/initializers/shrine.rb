@@ -1,10 +1,10 @@
 require "shrine/storage/s3"
 
 s3_options = {
-  access_key_id:      ENV['S3_KEY'],
-  secret_access_key:  ENV['S3_SECRET'],
-  region:             ENV['S3_REGION'],
-  bucket:             ENV['S3_BUCKET'],
+  access_key_id:      ENV['S3_KEY'] || 'foo',
+  secret_access_key:  ENV['S3_SECRET'] || 'foo',
+  region:             ENV['S3_REGION'] || 'foo',
+  bucket:             ENV['S3_BUCKET'] || 'foo',
 }
 Shrine.plugin :activerecord
 Shrine.plugin :validation_helpers
