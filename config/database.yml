@@ -1,9 +1,9 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: db
+  host: 127.0.0.1
   username: postgres
-  password: <%= ENV['OVERRIDE_DB_PASS'] || '' %>
+  password: <%= ENV['OVERRIDE_DB_PASS'] || 'admin' %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:

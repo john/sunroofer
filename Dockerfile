@@ -1,44 +1,33 @@
-# docker build -t sunroofer .
-# docker run sunroofer
-# docker-compose up --build
+# pushing to heroku container registry per:
+# https://devcenter.heroku.com/articles/container-registry-and-runtime#getting-started
 
-FROM ruby:2.4
+# heroku container:login
+# heroku container:push web
+# heroku container:release web
 
-# # Install dependencies:
-# # - build-essential: To ensure certain gems can be compiled
-# # - nodejs: Compile assets
-# # - libpq-dev: Communicate with postgres through the postgres gem
-RUN apt-get update -qq
-RUN apt-get install -y build-essential libpq-dev nodejs
+FROM ruby:2.6.0-alpine3.8
 
-ENV APP_NAME sunroofer
+RUN apk update
+RUN apk add \
+  bash \
+  build-base \
+  git \
+  nodejs \
+  python3 \
+  postgresql-dev \
+  postgresql-client \
+  tzdata \
+  yarn \
+  && rm -rf /var/cache/apk/*
 
-RUN mkdir -p /$APP_NAME
-# RUN mkdir -p /sunroofer
+# First copy the bundle files and install gems to aid caching of this layer
+WORKDIR /tmp
+COPY Gemfile* /tmp/
+RUN bundle install
 
-# # This sets the context of where commands will be ran in and is documented
-# # on Docker's website extensively.
-# WORKDIR /$APP_NAME
-WORKDIR /$APP_NAME
-
-COPY Gemfile ./
-COPY Gemfile.lock ./
-
-RUN gem install bundler && bundle install
-
-# # Copy code from current directory to the working container directory (WORKDIR)
-COPY . ./
-
-# # Provide dummy data to Rails so it can pre-compile assets.
-# # RUN bundle exec rake RAILS_ENV=production DATABASE_URL=postgresql://user:pass@127.0.0.1/dbname SECRET_TOKEN=pickasecuretoken assets:precompile
-
-# # Expose a volume so that nginx will be able to read in assets in production.
-# VOLUME ["/$APP_NAME/public"]
+ENV app /app
+RUN mkdir $app
+WORKDIR $app
+ADD . $app
 
 EXPOSE 3000
-
-# Configure an entry point, so we don't need to specify 
-# "bundle exec" for each of our commands.
-ENTRYPOINT ["bundle", "exec"]
-
-CMD ["rails", "server", "-b", "0.0.0.0"]
