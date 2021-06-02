@@ -1,24 +1,7 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Sunroofer aggregates solar potential across sets of buildings, using data scraped from Google's [Project Sunroof](https://www.google.com/get/sunroof). The /data/sf_schools.csv file contains a sample data set showing the aggregated solar potential of all schools in the San Francisco Unified School District system.
 
-Things you may want to cover:
+This had been hosted an Sunroofer.org, and may yet be again, one day.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+![Sunroofer screenshot of SFUSD buildings](https://raw.githubusercontent.com/john/sunroofer/master/public/sunroofer_screenshot.png)
