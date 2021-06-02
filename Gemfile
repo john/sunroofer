@@ -5,10 +5,10 @@ git_source(:github) do |repo|
   "https://github.com/#{repo}.git"
 end
 
-ruby "2.6.0"
+ruby "2.7.0"
 
 gem 'acts-as-taggable-on'
-gem 'aws-sdk'
+gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'devise'
 gem 'friendly_id'
@@ -18,7 +18,7 @@ gem 'httparty'
 gem 'humane-rails'
 gem 'pg'
 gem 'puma'
-gem 'rails', '6.0.0.beta1'
+gem 'rails', '6.0.3.7'
 gem 'rails-html-sanitizer'
 gem 'sass-rails', '~> 5.0'
 gem 'shrine'
